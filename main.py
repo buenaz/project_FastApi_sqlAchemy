@@ -3,21 +3,23 @@ import uvicorn
 from fastapi import FastAPI, Depends
 from fastapi.responses import JSONResponse
 from user_router import router as user_router
+from profile_router import router as profile_router
 from db import create_tables, delete_tables
 from contextlib import asynccontextmanager
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-   await create_tables()
-   print("База готова")
-   yield
-   await delete_tables()
-   print("База очищена")
+    await create_tables()
+    print("База готова")
+    yield
+    await delete_tables()
+    print("База очищена")
 
 
 app = FastAPI(lifespan=lifespan)
 app.include_router(user_router)
+app.include_router(profile_router)
 
 
 @app.get("/")
