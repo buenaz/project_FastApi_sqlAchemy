@@ -1,13 +1,11 @@
 from typing import Optional
-
 from fastapi import APIRouter, Depends
-from models import (ProfileAdd, ProfileGet, ProfileDelete, OutputProfileGet,
-                    ProfileUpdate)
+from profiles.profile_models import ProfileAdd, ProfileGet, ProfileDelete, ProfileUpdate, OutputProfileGet
 from requests import ProfileRequests
 from fastapi.responses import JSONResponse
 
 router = APIRouter(
-    prefix="/profile",
+    prefix="/profiles",
     tags=["Профили"]
 )
 

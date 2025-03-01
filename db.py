@@ -21,7 +21,7 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     username = Column(String, unique=True)
     email = Column(String, unique=True)
-    profile = relationship('Profile', backref='user', uselist=False)
+    profile = relationship('Profile', backref='users', uselist=False)
     projects = relationship('Project', secondary=user_project, backref='users')
 
 
@@ -40,7 +40,7 @@ class Project(Base):
     id = Column(Integer, primary_key=True)
     title = Column(String)
     description = Column(String)
-    tasks = relationship('Task', backref='project')
+    tasks = relationship('Task', backref='projects')
 
 
 @dataclasses.dataclass

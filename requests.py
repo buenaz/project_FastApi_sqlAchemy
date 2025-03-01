@@ -1,8 +1,7 @@
 from typing import Any, Optional
-
 from sqlalchemy import select, delete, update
-from models import (UserAdd, ConfigUser, UserDelete, UpdateUserEmail, ProfileDelete,
-                    ProfileAdd, OutputProfileGet, ProfileGet, ProfileUpdate)
+from users.user_models import UserAdd, ConfigUser, UserDelete, UpdateUserEmail
+from profiles.profile_models import ProfileDelete, ProfileAdd, OutputProfileGet, ProfileGet, ProfileUpdate
 from db import User, Profile, Project, Task, new_session
 
 

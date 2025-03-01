@@ -1,9 +1,9 @@
 import os
 import uvicorn
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 from fastapi.responses import JSONResponse
-from user_router import router as user_router
-from profile_router import router as profile_router
+from users.user_router import router as user_router
+from profiles.profile_router import router as profile_router
 from db import create_tables, delete_tables
 from contextlib import asynccontextmanager
 
