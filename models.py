@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel, ConfigDict
 
 
@@ -15,10 +17,6 @@ class UserDelete(BaseModel):
     id: int
 
 
-class GetUserId(BaseModel):
-    id: int
-
-
 class UpdateUserEmail(BaseModel):
     id: int
     email: str
@@ -27,11 +25,13 @@ class UpdateUserEmail(BaseModel):
 class ProfileAdd(BaseModel):
     bio: str
     phone: str
-    user_id: str
+    user_id: int
 
 
-class ConfigProfile(ProfileAdd):
-    id: int
+class OutputProfileGet(BaseModel):
+    bio: str
+    phone: str
+    user_id: int
     model_config = ConfigDict(from_attributes=True)
 
 
@@ -43,15 +43,7 @@ class ProfileGet(BaseModel):
     user_id: int
 
 
-class UpdateBio(BaseModel):
+class ProfileUpdate(BaseModel):
     user_id: int
-    bio: str
-
-
-class UpdatePhone(BaseModel):
-    user_id: int
-    phone: str
-
-
-class GetProfileId(BaseModel):
-    id: int
+    bio: Optional[str] | None
+    phone: Optional[str] | None

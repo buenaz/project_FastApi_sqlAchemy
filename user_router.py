@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from models import UserAdd, GetUserId, UserDelete, UpdateUserEmail
+from models import UserAdd, UserDelete, UpdateUserEmail
 from requests import UserRequests
 from fastapi.responses import JSONResponse
 
@@ -10,7 +10,7 @@ router = APIRouter(
 
 
 @router.post("/add")
-async def add_user(user: UserAdd = Depends()) -> GetUserId:
+async def add_user(user: UserAdd = Depends()) -> dict[str, int]:
     new_user = await UserRequests.add_user(user)
     return {"id": new_user}
 
