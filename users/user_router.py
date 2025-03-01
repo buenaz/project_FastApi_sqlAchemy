@@ -10,9 +10,9 @@ router = APIRouter(
 
 
 @router.post("/add")
-async def add_user(user: UserAdd = Depends()) -> dict[str, int]:
+async def add_user(user: UserAdd = Depends()) -> JSONResponse:
     new_user = await UserRequests.add_user(user)
-    return {"id": new_user}
+    return JSONResponse(status_code=200, content=f"Пользовать {user.username} c Id {new_user} добавлен")
 
 
 @router.get("")
@@ -30,4 +30,4 @@ async def delete_user(user: UserDelete = Depends()) -> JSONResponse:
 @router.patch("/update")
 async def update_user_email(user: UpdateUser = Depends()) -> JSONResponse:
     update_email = await UserRequests.update_user_email(user)
-    return JSONResponse(status_code=200, content="Пользователь обновлен")
+    return JSONResponse(status_code=200, content=f"Пользователь {user.id} обновлен")

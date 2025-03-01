@@ -11,8 +11,9 @@ router = APIRouter(
 
 
 @router.post("/add")
-async def profile_add(profile: ProfileAdd = Depends()) -> dict[str, int]:
-    return {"id": await ProfileRequests.add_profile(profile)}
+async def profile_add(profile: ProfileAdd = Depends()) -> JSONResponse:
+    add_profile = await ProfileRequests.add_profile(profile)
+    return JSONResponse(status_code=200, content=f"Профиль {profile.id} добавлен")
 
 
 @router.get("/")
