@@ -1,6 +1,6 @@
 from sqlalchemy import select, delete, update
 from users.user_models import UserAdd, ConfigUser, UserDelete, UpdateUser
-from db import User, Profile, Project, Task, new_session
+from db import User, Profile, new_session
 
 
 class UserRequests:
