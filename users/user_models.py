@@ -16,6 +16,7 @@ class UserDelete(BaseModel):
     id: int
 
 
-class UpdateUserEmail(BaseModel):
+class UpdateUser(BaseModel):
     id: int
-    email: str
+    username: Optional[str] = None
+    email: Optional[str] = None

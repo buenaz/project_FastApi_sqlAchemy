@@ -1,5 +1,5 @@
 from sqlalchemy import select, delete, update
-from users.user_models import UserAdd, ConfigUser, UserDelete, UpdateUserEmail
+from users.user_models import UserAdd, ConfigUser, UserDelete, UpdateUser
 from db import User, Profile, Project, Task, new_session
 
 
@@ -52,11 +52,15 @@ class UserRequests:
                 await session.rollback()
 
     @classmethod
-    async def update_user_email(cls, user: UpdateUserEmail) -> None:
+    async def update_user_email(cls, user: UpdateUser) -> None:
         async with new_session() as session:
             try:
-                await session.execute(update(User).where(User.id == user.id).values(email=user.email))
-                await session.commit()
+                if user.email:
+                    await session.execute(update(User).where(User.id == user.id).values(email=user.email))
+                    await session.commit()
+                if user.username:
+                    await session.execute(update(User).where(User.id == user.id).values(username=user.username))
+                    await session.commit()
             except Exception as e:
                 print(f"Ошибка при изменении email пользователя: {e}")
                 await session.rollback()

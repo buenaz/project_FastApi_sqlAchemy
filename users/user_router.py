@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from users.user_requests import UserRequests
-from users.user_models import UserAdd, UserDelete, UpdateUserEmail
+from users.user_models import UserAdd, UserDelete, UpdateUser
 from fastapi.responses import JSONResponse
 
 router = APIRouter(
@@ -27,7 +27,7 @@ async def delete_user(user: UserDelete = Depends()) -> JSONResponse:
     return JSONResponse(status_code=200, content="Пользователь удален")
 
 
-@router.post("/update_email")
-async def update_user_email(user: UpdateUserEmail = Depends()) -> JSONResponse:
+@router.patch("/update")
+async def update_user_email(user: UpdateUser = Depends()) -> JSONResponse:
     update_email = await UserRequests.update_user_email(user)
-    return JSONResponse(status_code=200, content="email обновлен")
+    return JSONResponse(status_code=200, content="Пользователь обновлен")
