@@ -114,7 +114,12 @@ class ProfileRequests:
     async def update_profile(cls, profile: ProfileUpdate) -> None:
         async with new_session() as session:
             try:
-                pass
+                if profile.bio:
+                    await session.execute(update(Profile).where(Profile.user_id == profile.user_id).values(bio=profile.bio))
+                    await session.commit()
+                if profile.phone:
+                    await session.execute(update(Profile).where(Profile.user_id == profile.user_id).values(phone=profile.phone))
+                    await session.commit()
             except Exception as e:
                 print(f"Ошибка при обновлении профиля пользователя: {e}")
                 await session.rollback()

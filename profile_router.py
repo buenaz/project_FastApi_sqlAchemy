@@ -32,7 +32,7 @@ async def profile_delete(profile: ProfileDelete = Depends()) -> JSONResponse:
     return JSONResponse(status_code=200, content="Профиль пользователя удален")
 
 
-@router.put("/update")
+@router.patch("/update")
 async def profile_update(profile: ProfileUpdate = Depends()) -> JSONResponse:
     update_profile = await ProfileRequests.update_profile(profile)
     return JSONResponse(status_code=200, content="Профиль пользователя обновлен")

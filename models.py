@@ -1,5 +1,4 @@
 from typing import Optional
-
 from pydantic import BaseModel, ConfigDict
 
 
@@ -45,5 +44,5 @@ class ProfileGet(BaseModel):
 
 class ProfileUpdate(BaseModel):
     user_id: int
-    bio: Optional[str] | None
-    phone: Optional[str] | None
+    bio: Optional[str] = None
+    phone: Optional[str] = None
