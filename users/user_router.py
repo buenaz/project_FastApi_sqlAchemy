@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from requests import UserRequests
+from users.user_requests import UserRequests
 from users.user_models import UserAdd, UserDelete, UpdateUserEmail
 from fastapi.responses import JSONResponse
 

@@ -1,7 +1,7 @@
 from typing import Optional
 from fastapi import APIRouter, Depends
 from profiles.profile_models import ProfileAdd, ProfileGet, ProfileDelete, ProfileUpdate, OutputProfileGet
-from requests import ProfileRequests
+from profiles.profile_requests import ProfileRequests
 from fastapi.responses import JSONResponse
 
 router = APIRouter(
