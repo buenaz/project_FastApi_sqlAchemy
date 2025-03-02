@@ -5,12 +5,16 @@ from pydantic import BaseModel, ConfigDict
 class ProfileAdd(BaseModel):
     bio: str
     phone: str
+    skill: str
+    social_link: str
     user_id: int
 
 
 class OutputProfileGet(BaseModel):
     bio: str
     phone: str
+    skill: str
+    social_link: str
     user_id: int
     model_config = ConfigDict(from_attributes=True)
 
@@ -27,3 +31,5 @@ class ProfileUpdate(BaseModel):
     user_id: int
     bio: Optional[str] = None
     phone: Optional[str] = None
+    skill: Optional[str] = None
+    social_link: Optional[str] = n

@@ -56,10 +56,16 @@ class UserRequests:
         async with new_session() as session:
             try:
                 if user.email:
-                    await session.execute(update(User).where(User.id == user.id).values(email=user.email))
+                    await session.execute(update(User).where(User.id == user.id).
+                                          values(email=user.email))
                     await session.commit()
                 if user.username:
-                    await session.execute(update(User).where(User.id == user.id).values(username=user.username))
+                    await session.execute(update(User).where(User.id == user.id).
+                                          values(username=user.username))
+                    await session.commit()
+                if user.role:
+                    await session.execute(update(User).where(User.id == user.id).
+                                          values(role=user.role))
                     await session.commit()
             except Exception as e:
                 print(f"Ошибка при изменении email пользователя: {e}")

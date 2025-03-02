@@ -21,6 +21,7 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     username = Column(String, unique=True)
     email = Column(String, unique=True)
+    role = Column(String)
     profile = relationship('Profile', backref='users', uselist=False)
     projects = relationship('Project', secondary=user_project, backref='users')
 
@@ -31,6 +32,8 @@ class Profile(Base):
     id = Column(Integer, primary_key=True)
     bio = Column(String)
     phone = Column(String, unique=True)
+    skill = Column(String)
+    social_link = Column(String, unique=True)
     user_id = Column(Integer, ForeignKey('users.id'), unique=True)
 
 

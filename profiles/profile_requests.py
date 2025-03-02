@@ -54,10 +54,20 @@ class ProfileRequests:
         async with new_session() as session:
             try:
                 if profile.bio:
-                    await session.execute(update(Profile).where(Profile.user_id == profile.user_id).values(bio=profile.bio))
+                    await session.execute(update(Profile).where(Profile.user_id == profile.user_id).
+                                          values(bio=profile.bio))
                     await session.commit()
                 if profile.phone:
-                    await session.execute(update(Profile).where(Profile.user_id == profile.user_id).values(phone=profile.phone))
+                    await session.execute(update(Profile).where(Profile.user_id == profile.user_id).
+                                          values(phone=profile.phone))
+                    await session.commit()
+                if profile.skill:
+                    await session.execute(update(Profile).where(Profile.user_id == profile.user_id).
+                                          values(skill=profile.skill))
+                    await session.commit()
+                if profile.social_link:
+                    await session.execute(update(Profile).where(Profile.user_id == profile.user_id).
+                                          values(social_link=profile.social_link))
                     await session.commit()
             except Exception as e:
                 print(f"Ошибка при обновлении профиля пользователя: {e}")

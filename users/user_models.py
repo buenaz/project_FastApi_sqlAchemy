@@ -5,6 +5,7 @@ from pydantic import BaseModel, ConfigDict
 class UserAdd(BaseModel):
     username: str
     email: str
+    role: str
 
 
 class ConfigUser(UserAdd):
@@ -20,3 +21,4 @@ class UpdateUser(BaseModel):
     id: int
     username: Optional[str] = None
     email: Optional[str] = None
+    role: Optional[str] = None
