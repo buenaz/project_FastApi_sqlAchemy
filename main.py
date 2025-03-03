@@ -7,6 +7,8 @@ from profiles.profile_router import router as profile_router
 from projects.project_router import router as project_router
 from db import create_tables, delete_tables
 from contextlib import asynccontextmanager
+from fastapi.templating import Jinja2Templates
+from db import engine
 
 
 @asynccontextmanager

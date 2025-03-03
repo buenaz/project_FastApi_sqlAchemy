@@ -32,4 +32,4 @@ class ProfileUpdate(BaseModel):
     bio: Optional[str] = None
     phone: Optional[str] = None
     skill: Optional[str] = None
-    social_link: Optional[str] = n
+    social_link: Optional[str] = None
