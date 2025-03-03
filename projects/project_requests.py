@@ -1,9 +1,9 @@
-from typing import Optional
+from typing import Optional, List
 
-from sqlalchemy import select, delete, update
+from sqlalchemy import select, delete, update, insert
 from projects.project_models import (ProjectUpdate, ProjectAdd, ProjectGet,
-                                     ProjectDelete, OutputProjectGet)
-from db import Project, new_session
+                                     ProjectDelete, OutputProjectGet, AssignUser, AssignedUsers)
+from db import Project, new_session, User, user_project
 
 
 class ProjectRequests:
@@ -65,4 +65,56 @@ class ProjectRequests:
                     await session.commit()
             except Exception as e:
                 print(f"Ошибка при обновлении проекта: {e}")
+                await session.rollback()
+
+    @classmethod
+    async def assign_user_for_project(cls, project: AssignUser) -> None:
+        async with new_session() as session:
+            try:
+                result_project = await session.execute(select(Project).where(Project.id == project.id))
+                project_to_assign = result_project.scalar_one_or_none()
+                if not project_to_assign:
+                    print(f"Проект {project.project_id} не найден.")
+                    return
+
+                result_user = await session.execute(select(User).where(User.id == project.user_id))
+                user_to_assign = result_user.scalar_one_or_none()
+                if not user_to_assign:
+                    print(f"Пользователь {project.user_id} не найден.")
+                    return
+
+                result_assignment = await session.execute(
+                    select(user_project).where(user_project.c.project_id == project.id,
+                                               user_project.c.user_id == project.user_id)
+                )
+                existing_assignment = result_assignment.fetchone()
+                if existing_assignment:
+                    print(f"Пользователь {project.user_id} уже назначен на проект {project.id}.")
+                    return
+
+                await session.execute(
+                    insert(user_project).values(project_id=project.id, user_id=project.user_id)
+                )
+                await session.commit()
+            except Exception as e:
+                print(f"Ошибка при назначении пользователя на проект: {e}")
+                await session.rollback()
+
+    @classmethod
+    async def get_assigned_users(cls, project: AssignedUsers) -> List[AssignedUsers]:
+        async with new_session() as session:
+            try:
+                result = await session.execute(
+                    select(User.id, User.username, user_project.c.id).join(user_project,
+                                                                           User.id == user_project.c.user_id)
+                    .where(user_project.c.project_id == project.id)
+                )
+                assigned_users = result.fetchall()
+                if assigned_users:
+                    return [AssignedUsers.model_validate(user) for user in assigned_users]
+                else:
+                    print(f"Нет назначенных пользователей для проекта {project.id}.")
+                    return []
+            except Exception as e:
+                print(f"Ошибка при получении назначенных пользователей: {e}")
                 await session.rollback()

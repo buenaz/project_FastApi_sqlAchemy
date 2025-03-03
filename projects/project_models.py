@@ -26,3 +26,14 @@ class ProjectUpdate(BaseModel):
     id: int
     title: Optional[str] = None
     description: Optional[str] = None
+
+
+class AssignUser(BaseModel):
+    user_id: int
+    id: int
+
+
+class AssignedUsers(BaseModel):
+    user_id: int
+    id: int
+

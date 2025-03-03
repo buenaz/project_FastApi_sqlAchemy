@@ -5,10 +5,9 @@ from fastapi.responses import JSONResponse
 from users.user_router import router as user_router
 from profiles.profile_router import router as profile_router
 from projects.project_router import router as project_router
+from tasks.task_router import router as task_router
 from db import create_tables, delete_tables
 from contextlib import asynccontextmanager
-from fastapi.templating import Jinja2Templates
-from db import engine
 
 
 @asynccontextmanager
@@ -21,9 +20,11 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+
 app.include_router(user_router)
 app.include_router(profile_router)
 app.include_router(project_router)
+app.include_router(task_router)
 
 
 @app.get("/")

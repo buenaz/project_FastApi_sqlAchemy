@@ -1,7 +1,7 @@
-from typing import Optional
+from typing import Optional, List
 from fastapi import APIRouter, Depends
 from projects.project_models import (ProjectUpdate, ProjectAdd, ProjectGet,
-                                     ProjectDelete, OutputProjectGet)
+                                     ProjectDelete, OutputProjectGet, AssignUser, AssignedUsers)
 from projects.project_requests import ProjectRequests
 from fastapi.responses import JSONResponse
 
@@ -36,3 +36,16 @@ async def project_delete(project: ProjectDelete = Depends()) -> JSONResponse:
 async def project_update(project: ProjectUpdate = Depends()) -> JSONResponse:
     update_project = await ProjectRequests.update_project(project)
     return JSONResponse(status_code=200, content=f"Данные о проекте {project.id} обновлены")
+
+
+@router.post("/add_user")
+async def assign_user(project: AssignUser = Depends()) -> JSONResponse:
+    add_user = ProjectRequests.assign_user_for_project(project)
+    return JSONResponse(status_code=200, content=f"Пользователь с Id {project.user_id} добавлен к проекту {project.id}")
+
+
+@router.get("/get_users")
+async def get_assigned_users(project: AssignedUsers = Depends()) -> List[AssignedUsers]:
+    assigned_users = await ProjectRequests.get_assigned_users(project)
+    return assigned_users
+
