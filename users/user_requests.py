@@ -52,7 +52,7 @@ class UserRequests:
                 await session.rollback()
 
     @classmethod
-    async def update_user_email(cls, user: UpdateUser) -> None:
+    async def update_user(cls, user: UpdateUser) -> None:
         async with new_session() as session:
             try:
                 if user.email:
