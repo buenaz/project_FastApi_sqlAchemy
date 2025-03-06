@@ -10,12 +10,8 @@ class ProfileAdd(BaseModel):
     user_id: int
 
 
-class OutputProfileGet(BaseModel):
-    bio: str
-    phone: str
-    skill: str
-    social_link: str
-    user_id: int
+class OutputProfileGet(ProfileAdd):
+    id: int
     model_config = ConfigDict(from_attributes=True)
 
 

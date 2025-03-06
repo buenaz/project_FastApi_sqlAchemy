@@ -11,10 +11,8 @@ class ProjectGet(BaseModel):
     id: int
 
 
-class OutputProjectGet(BaseModel):
+class OutputProjectGet(ProjectAdd):
     id: int
-    title: str
-    description: str
     model_config = ConfigDict(from_attributes=True)
 
 

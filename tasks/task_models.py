@@ -21,11 +21,8 @@ class TasksGet(BaseModel):
     project_id: int
 
 
-class OutputTasksGet(BaseModel):
+class OutputTasksGet(TaskAdd):
     id: int
-    title: str
-    status: str
-    project_id: int
     model_config = ConfigDict(from_attributes=True)
 
 
