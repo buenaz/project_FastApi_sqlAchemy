@@ -2,7 +2,7 @@ from typing import Optional, List
 
 from sqlalchemy import select, delete, update, insert
 from projects.project_models import (ProjectUpdate, ProjectAdd, ProjectGet,
-                                     ProjectDelete, OutputProjectGet, AssignUser, AssignedUsers)
+                                     ProjectDelete, OutputProjectGet, AssignUser, AssignedUsers, OutputAssignedUsers)
 from db import Project, new_session, User, user_project
 
 
@@ -101,20 +101,18 @@ class ProjectRequests:
                 await session.rollback()
 
     @classmethod
-    async def get_assigned_users(cls, project: AssignedUsers) -> List[AssignedUsers]:
+    async def get_assigned_users(cls, project: AssignedUsers) -> List[OutputAssignedUsers]:
         async with new_session() as session:
             try:
                 result = await session.execute(
-                    select(User.id, User.username, user_project.c.id).join(user_project,
-                                                                           User.id == user_project.c.user_id)
-                    .where(user_project.c.project_id == project.id)
+                    select(user_project.c.user_id).where(user_project.c.project_id == project.id)
                 )
                 assigned_users = result.fetchall()
-                if assigned_users:
-                    return [AssignedUsers.model_validate(user) for user in assigned_users]
-                else:
-                    print(f"Нет назначенных пользователей для проекта {project.id}.")
-                    return []
+                output_assigned_users = [
+                    OutputAssignedUsers(user_id=user_id) for user_id in [user[0] for user in assigned_users]
+                ]
+                return output_assigned_users
             except Exception as e:
                 print(f"Ошибка при получении назначенных пользователей: {e}")
                 await session.rollback()
+                return []

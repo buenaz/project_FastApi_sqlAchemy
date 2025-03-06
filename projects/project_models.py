@@ -34,6 +34,9 @@ class AssignUser(BaseModel):
 
 
 class AssignedUsers(BaseModel):
-    user_id: int
     id: int
+
+
+class OutputAssignedUsers(BaseModel):
+    user_id: int
 
