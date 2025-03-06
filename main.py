@@ -8,7 +8,6 @@ from projects.project_router import router as project_router
 from tasks.task_router import router as task_router
 from db import create_tables, delete_tables
 
-
 app = FastAPI()
 
 app.include_router(user_router)
@@ -22,13 +21,13 @@ async def main() -> JSONResponse:
     return JSONResponse(status_code=200, content="Manager-App")
 
 
-@app.get("/start")
+@app.get("start")
 async def start() -> JSONResponse:
     await create_tables()
-    return JSONResponse(status_code=200, content="Таблицы созданы")
+    return JSONResponse(status_code=200, content="Базы данных созданы")
 
 
-@app.get("/finish")
+@app.get("finish")
 async def finish() -> JSONResponse:
     await delete_tables()
     return JSONResponse(status_code=200, content="Таблицы очищены")

@@ -1,10 +1,10 @@
 from typing import Optional
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class TaskAdd(BaseModel):
-    title: str
-    status: str
+    title: str = Field(min_length=3, max_length=50)
+    status: str = Field(min_length=3, max_length=25)
     project_id: int
 
 

@@ -1,10 +1,10 @@
 from typing import Optional
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class ProjectAdd(BaseModel):
-    title: str
-    description: str
+    title: str = Field(min_length=3, max_length=25)
+    description: str = Field(min_length=10, max_length=100)
 
 
 class ProjectGet(BaseModel):

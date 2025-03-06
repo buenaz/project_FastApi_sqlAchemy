@@ -1,11 +1,11 @@
 from typing import Optional
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
 
 class UserAdd(BaseModel):
-    username: str
-    email: str
-    role: str
+    username: str = Field(min_length=3, max_length=25)
+    email: EmailStr
+    role: str = Field(min_length=3, max_length=25)
 
 
 class ConfigUser(UserAdd):
@@ -20,5 +20,5 @@ class UserDelete(BaseModel):
 class UpdateUser(BaseModel):
     id: int
     username: Optional[str] = None
-    email: Optional[str] = None
+    email: Optional[EmailStr] = None
     role: Optional[str] = None
